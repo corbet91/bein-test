@@ -1,30 +1,42 @@
 "use client";
 
-import { Form } from "@/components/ui/form";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+} from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import TokenService from "@/services/token.service";
 import { Login } from "@/services/user.service";
 import { LoginPayload } from "@/types";
 import { useMutation } from "@tanstack/react-query";
 import { useForm } from "react-hook-form";
-import { useRouter } from 'next/navigation'
+import { useRouter } from "next/navigation";
+import { Button } from "@/components/ui/button";
 
 interface ILoginPayload {
-  email: string;
+  username: string;
   password: string;
 }
 
 const LoginPage = () => {
-  const form = useForm<ILoginPayload>();
+    const form = useForm<ILoginPayload>({
+    defaultValues: {
+      username: '', 
+      password: '', 
+    },
+  });
   const accessToken = TokenService.getAuth();
   const router = useRouter();
-  console.log("accessToken",accessToken)
+  console.log("accessToken", accessToken);
   const loginMutation = useMutation({
     mutationKey: ["login"],
     mutationFn: Login,
     onSuccess: (result) => {
-    router.push('/pages/home');
-  
+      router.push("/pages/home");
+
       TokenService.setAuth({
         accessToken: result.accessToken,
         email: result.email,
@@ -38,36 +50,49 @@ const LoginPage = () => {
   };
 
   return (
-    <div className="flex h-screen bg-linear-to-r from-cyan-500 to-blue-500 justify-center items-center">
+    <div className="flex h-screen bg-[url(/public/bein.webp)] justify-center items-center">
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit(onSubmit)}
-          className="rounded-2xl bg-black w-[480px] h-[460px] flex flex-col p-4 justify-between"
+          className="rounded-2xl bg-white  w-[436px] h-[680px] flex flex-col p-4 justify-between"
         >
-          <div>
-            <FormFieldCustom
-              name="email"
-              nameLabel="email"
-              description="Vui lòng điền đầy đủ thông tin"
-              children={
-                <Input placeholder="Email" className="h-[56px] bg-white" />
-              }
+          <div className="flex flex-col gap-4">
+            <FormField
+              control={form.control}
+              name="username"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Username</FormLabel>
+                  <FormControl>
+                    <Input
+                      className="h-[40px]"
+                      placeholder="Your username"
+                      {...field}
+                    />
+                  </FormControl>
+                </FormItem>
+              )}
             />
-            <FormFieldCustom
+            <FormField
+              control={form.control}
               name="password"
-              nameLabel="mật khẩu"
-              description="Vui lòng điền đầy đủ thông tin"
-              children={
-                <Input
-                  placeholder="password"
-                  type="password"
-                  className="h-[56px] bg-white"
-                />
-              }
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Password</FormLabel>
+                  <FormControl>
+                    <Input
+                      className="h-[40px]"
+                      placeholder="Your password"
+                      type="password"
+                      {...field}
+                    />
+                  </FormControl>
+                </FormItem>
+              )}
             />
-          </div>
-          <div className="flex flex-col items-center gap-8">
-            <SubmitButton loading={false} name="Xác nhận" type="submit" />
+            <Button className="w-full h-[40px]" type="submit">
+              Log in
+            </Button>
           </div>
         </form>
       </Form>

@@ -46,7 +46,7 @@ export interface TUser {
 }
 
 export type LoginPayload = {
-  email: string;
+  username: string;
   password: string;
 };
 
