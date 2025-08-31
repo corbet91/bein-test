@@ -1,4 +1,3 @@
-import type { TUser } from "@/types";
 import { create } from "zustand";
 
 interface ISearch {

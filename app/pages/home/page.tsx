@@ -33,7 +33,7 @@ const Home = () => {
   return (
     <div className="flex flex-col items-center bg-[#EAEDF2] gap-4 pt-19 pb-4">
       {dataPost.map((item, index) => {
-        return <CardPost body={item.body} title={item.title} key={index} />;
+        return <CardPost body={item.body} title={item.title} key={index} userId={item.userId} tags={item?.tags} />;
       })}
     </div>
   );

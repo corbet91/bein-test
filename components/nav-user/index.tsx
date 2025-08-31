@@ -9,9 +9,8 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import TokenService from "@/services/token.service";
-import { ChevronsUpDown, LogOut } from "lucide-react";
+import { LogOut } from "lucide-react";
 import { useRouter } from "next/navigation";
-import { Button } from "../ui/button";
 
 export function NavUser() {
   const router = useRouter();
@@ -40,7 +39,7 @@ export function NavUser() {
         <DropdownMenuLabel className="p-0 font-normal">
           <div className="flex items-center gap-2 px-1 py-1.5 text-left text-sm">
             <Avatar className="h-8 w-8 rounded-lg">
-              <AvatarImage src={"/avatars/shadcn.jpg"} alt={"emilys"} />
+              <AvatarImage alt={"emilys"} />
               <AvatarFallback className="rounded-lg cursor-pointer">
                 {"E"}
               </AvatarFallback>

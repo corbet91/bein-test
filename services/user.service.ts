@@ -7,6 +7,6 @@ export async function Login(payload: LoginPayload) {
 }
 
 export async function getDetailUser(id: number) {
-  const { data } = await axios.post(`/users/${id}`);
+  const { data } = await axios.get(`/users/${id}`);
   return data;
 }
