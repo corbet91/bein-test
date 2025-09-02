@@ -17,6 +17,7 @@ import { useForm } from "react-hook-form";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import LoginImage from "@/public/bein.webp";
+import { useIsLogout } from "@/zustand";
 
 interface ILoginPayload {
   username: string;
@@ -32,13 +33,14 @@ const LoginPage = () => {
   });
 
   const router = useRouter();
+  const {isLogout,setIsLogout} = useIsLogout();
 
   const loginMutation = useMutation({
     mutationKey: ["login"],
     mutationFn: Login,
     onSuccess: (result) => {
       router.push("/pages/home");
-
+      setIsLogout(false)
       TokenService.setAuth({
         accessToken: result.accessToken,
         email: result.email,

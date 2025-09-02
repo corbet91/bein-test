@@ -9,22 +9,24 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import TokenService from "@/services/token.service";
+import { useIsLogout } from "@/zustand";
 import { LogOut } from "lucide-react";
 import { useRouter } from "next/navigation";
 
 export function NavUser() {
   const router = useRouter();
+  const {isLogout,setIsLogout} = useIsLogout();
 
   const handleLogout = () => {
     TokenService.removeAuth();
-    router.push("/login");
+    setIsLogout(true)
+    router.push("/pages/login");
   };
 
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <Avatar className="h-8 w-8 rounded-lg">
-          <AvatarImage src={"/avatars/shadcn.jpg"} alt={"emilys"} />
           <AvatarFallback className="rounded-lg cursor-pointer">
             {"E"}
           </AvatarFallback>
