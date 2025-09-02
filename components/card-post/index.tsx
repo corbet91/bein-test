@@ -25,12 +25,12 @@ interface ICardPost {
 export const CardPost = ({ title, body, userId, tags, postId }: ICardPost) => {
   const [value, setValue] = useState("");
 
-  const { isLoading, isError, data, error } = useQuery({
+  const { data } = useQuery({
     queryKey: [`userDetail_${userId}`],
     queryFn: () => getDetailUser(userId),
   });
 
-  const { isLoading: isLoadingComment, data: dataResult } = useQuery({
+  const {data: dataResult } = useQuery({
     queryKey: [`comments${postId}`],
     queryFn: () => getCommentsByPost(postId),
   });
@@ -38,7 +38,7 @@ export const CardPost = ({ title, body, userId, tags, postId }: ICardPost) => {
   const CommentMutation = useMutation({
     mutationKey: ["new-comment"],
     mutationFn: addNewComment,
-    onSuccess: (result) => {
+    onSuccess: () => {
       setValue("");
     },
     onError: () => {},
